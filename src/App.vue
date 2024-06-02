@@ -1,85 +1,65 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import VideoPlayer from './components/VideoPlayer.vue'
+import Rick from './assets/Rick.mp4'
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+    <videoPlayer :src="Rick" @play="onPlayerPlay" @pause="onPlayerPause" @ended="onPlayerEnded"
+        @loadeddata="onPlayerLoadeddata" @waiting="onPlayerWaiting" @playing="onPlayerPlaying"
+        @timeupdate="onPlayerTimeupdate" @canplay="onPlayerCanplay" @canplaythrough="onPlayerCanplaythrough"
+        @statechanged="playerStateChanged">
+        <template v-slot:controls="{ togglePlay, toggleMute, playing, videoMuted }">
+            <div class="videoplayer-controls">
+                <button @click="togglePlay()">{{ playing ? "pause" : "play" }}</button>
+                <button @click="toggleMute()">{{ videoMuted ? "unmute" : "mute" }}</button>
+            </div>
+        </template>
+    </videoplayer>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+<script lang="ts">
+
+function onPlayerPlay({ event, player }) {
+    console.log(event.type);
+    player.setPlaying(true);
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+function onPlayerPause({ event, player }) {
+    console.log(event.type);
+    player.setPlaying(false);
 }
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
+function onPlayerEnded({ event, player }) {
+    console.log(event.type);
+    player.setPlaying(false);
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
+function onPlayerLoadeddata({ event }) {
+    console.log(event.type);
 }
 
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
+function onPlayerWaiting({ event }) {
+    console.log(event.type);
 }
 
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
+function onPlayerPlaying({ event }) {
+    console.log(event.type);
 }
 
-nav a:first-of-type {
-  border: 0;
+function onPlayerTimeupdate({ event }) {
+    console.log({ event: event.type, time: event.target.currentTime });
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+function onPlayerCanplay({ event }) {
+    console.log(event.type);
 }
-</style>
+
+function onPlayerCanplaythrough({ event }) {
+    console.log(event.type);
+}
+
+function playerStateChanged({ event }) {
+    console.log(event.type);
+}
+
+</script>
