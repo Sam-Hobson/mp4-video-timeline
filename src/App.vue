@@ -2,6 +2,7 @@
 import VideoPlayer from './components/VideoPlayer.vue'
 import FileUpload from './components/FileUpload.vue'
 import Rick from './assets/Rick.mp4'
+import { MP4Demux, Events } from 'demuxer';
 </script>
 
 <template>
@@ -18,7 +19,7 @@ import Rick from './assets/Rick.mp4'
     </videoplayer>
 
 
-    <FileUpload />
+    <FileUpload @fileLoaded="onVideoLoaded" />
 </template>
 
 <script lang="ts">
@@ -26,6 +27,24 @@ import Rick from './assets/Rick.mp4'
 let vueDev = document.createElement('script');
 vueDev.setAttribute('src', 'http://localhost:8098');
 document.head.appendChild(vueDev);
+
+function onVideoLoaded(ab: ArrayBuffer) {
+    console.log("START: onVideoLoaded");
+    const demux = new MP4Demux();
+
+    // The data is spit out in a streaming manner,
+    // and the first data is emitted as soon as possible.
+    demux.on(Events.DEMUX_DATA, (e: any) => {
+        console.log("DEMUX DATA")
+        console.log(e);
+    });
+
+    demux.on(Events.DONE, (e: any) => {
+        console.log("EVENT DONE")
+    });
+
+    demux.push(ab, { done: true });
+}
 
 function onPlayerPlay({ event, player }: any) {
     console.log(event.type);

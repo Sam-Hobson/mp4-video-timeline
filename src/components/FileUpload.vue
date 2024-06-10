@@ -9,11 +9,7 @@
 export default {
     name: "FileUpload",
 
-    data() {
-        return {
-            fileContent: undefined
-        };
-    },
+    data() { },
 
     methods: {
         handleFileUpload(event: any) {
@@ -27,7 +23,7 @@ export default {
             const reader = new FileReader();
 
             reader.onload = () => {
-                this.fileContent = reader.result;
+                this.$emit("fileLoaded", reader.result);
             };
 
             reader.readAsArrayBuffer(file);
