@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import VideoPlayer from './components/VideoPlayer.vue'
+import FileUpload from './components/FileUpload.vue'
 import Rick from './assets/Rick.mp4'
 </script>
 
@@ -15,50 +16,57 @@ import Rick from './assets/Rick.mp4'
             </div>
         </template>
     </videoplayer>
+
+
+    <FileUpload />
 </template>
 
 <script lang="ts">
 
-function onPlayerPlay({ event, player }) {
+let vueDev = document.createElement('script');
+vueDev.setAttribute('src', 'http://localhost:8098');
+document.head.appendChild(vueDev);
+
+function onPlayerPlay({ event, player }: any) {
     console.log(event.type);
     player.setPlaying(true);
 }
 
-function onPlayerPause({ event, player }) {
+function onPlayerPause({ event, player }: any) {
     console.log(event.type);
     player.setPlaying(false);
 }
 
-function onPlayerEnded({ event, player }) {
+function onPlayerEnded({ event, player }: any) {
     console.log(event.type);
     player.setPlaying(false);
 }
 
-function onPlayerLoadeddata({ event }) {
+function onPlayerLoadeddata({ event }: any) {
     console.log(event.type);
 }
 
-function onPlayerWaiting({ event }) {
+function onPlayerWaiting({ event }: any) {
     console.log(event.type);
 }
 
-function onPlayerPlaying({ event }) {
+function onPlayerPlaying({ event }: any) {
     console.log(event.type);
 }
 
-function onPlayerTimeupdate({ event }) {
+function onPlayerTimeupdate({ event }: any) {
     console.log({ event: event.type, time: event.target.currentTime });
 }
 
-function onPlayerCanplay({ event }) {
+function onPlayerCanplay({ event }: any) {
     console.log(event.type);
 }
 
-function onPlayerCanplaythrough({ event }) {
+function onPlayerCanplaythrough({ event }: any) {
     console.log(event.type);
 }
 
-function playerStateChanged({ event }) {
+function playerStateChanged({ event }: any) {
     console.log(event.type);
 }
 
