@@ -9,8 +9,6 @@
 export default {
     name: "FileUpload",
 
-    data() { },
-
     methods: {
         handleFileUpload(event: any) {
             const file: Blob = event.target.files[0];
