@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import FileUpload from './components/FileUpload.vue'
+import { CanvasRenderer } from './utils/renderers/CanvasRenderer';
 </script>
 
 <template>
@@ -7,6 +8,8 @@ import FileUpload from './components/FileUpload.vue'
 </template>
 
 <script lang="ts">
+    const renderer = new CanvasRenderer();
+
     function onFileUploaded(ab: ArrayBuffer) {
     }
 </script>

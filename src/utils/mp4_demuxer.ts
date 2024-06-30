@@ -63,7 +63,7 @@ export class Mp4Demuxer {
         this.#onChunk = onChunk;
     }
 
-    writeFrom(stream: ReadableStream) {
+    fromStream(stream: ReadableStream) {
         // Callbacks from  the MP4File will callback onConfig & onChunk which can then
         // allow data to be passed to a decoder.
         this.#file = this.#bindFile(createFile())
