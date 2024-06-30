@@ -31,6 +31,7 @@ function start({
     rendererSelection,
     canvas
 }: VideoProcessingOptions) {
+    debugger;
     const renderer = renderers[rendererSelection](canvas);
 
     const decoder = new VideoDecoder({
