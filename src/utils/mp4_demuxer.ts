@@ -64,6 +64,8 @@ export class Mp4Demuxer {
     }
 
     writeFrom(stream: ReadableStream) {
+        // Callbacks from  the MP4File will callback onConfig & onChunk which can then
+        // allow data to be passed to a decoder.
         this.#file = this.#bindFile(createFile())
         const sink = new Mp4FileSink(this.#file);
         stream.pipeTo(new WritableStream(sink, { highWaterMark: 2 }))
